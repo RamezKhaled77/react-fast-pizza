@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Home from "./ui/Home";
+import Error from "./ui/Error";
 import Menu, { loader as menuLoader } from "./features/menu/Menu";
 import Cart from "./features/cart/Cart";
 import CreateOrder from "./features/order/CreateOrder";
@@ -10,6 +11,7 @@ import AppLayout from "./ui/AppLayout";
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
+    errorElement: <Error />,
     children: [
       {
         path: "/",
@@ -19,6 +21,7 @@ const router = createBrowserRouter([
         path: "/menu",
         element: <Menu />,
         loader: menuLoader, // That is how we load data for a route. The loader function will be called when the route is matched, and the returned data will be available in the component via useLoaderData.
+        errorElement: <Error />, // For Fetching data errors
       },
       {
         path: "/cart",
