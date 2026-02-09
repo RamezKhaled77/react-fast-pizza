@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Form, redirect } from "react-router-dom";
+import { createOrder } from "../../services/apiRestaurant";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -32,13 +34,21 @@ const fakeCart = [
 
 function CreateOrder() {
   // const [withPriority, setWithPriority] = useState(false);
+  // NOTE - We don't need to use useActionData here, because we can navigate to the order page directly after creating the order in the action function. But if we wanted to stay on the same page and display a message or something, we could use useActionData to get the returned data from the action function.
+  // const navigate = useNavigate();
+  // const newOrder = useActionData();
+  // if (newOrder) {
+  //   console.log(newOrder.id);
+  //   navigate(`/order/${newOrder.id}`);
+  // }
+
   const cart = fakeCart;
 
   return (
     <div>
       <h2>Ready to order? Let&apos;s go!</h2>
 
-      <form>
+      <Form method="POST">
         <div>
           <label>First Name</label>
           <input type="text" name="customer" required />
@@ -70,11 +80,27 @@ function CreateOrder() {
         </div>
 
         <div>
+          <input type="hidden" name="cart" value={JSON.stringify(cart)} />
           <button>Order now</button>
         </div>
-      </form>
+      </Form>
     </div>
   );
+}
+
+export async function action({ request }) {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+
+  const order = {
+    ...data,
+    priority: data.priority === "on", // The value of a checkbox is "on" when it's checked, and undefined when it's not. So we check if the value is "on" to set the priority to true or false.
+    cart: JSON.parse(data.cart), // We need to parse the cart data, because it was stringified before being sent to the server.
+  };
+
+  const newOrder = await createOrder(order);
+
+  return redirect(`/order/${newOrder.id}`); // After creating the order, we redirect to the order page. The new order's id is available in the returned data from the createOrder function, which is returned from the action function, and can be accessed in the component via useActionData. But since we're redirecting to a different page, we don't need to use useActionData here, we can just use the new order's id directly in the redirect function.
 }
 
 export default CreateOrder;
