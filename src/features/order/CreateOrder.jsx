@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, redirect } from "react-router-dom";
+import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 
 // https://uibakery.io/regex-library/phone-number
@@ -33,6 +33,10 @@ const fakeCart = [
 ];
 
 function CreateOrder() {
+  const formErrors = useActionData();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+
   // const [withPriority, setWithPriority] = useState(false);
   // NOTE - We don't need to use useActionData here, because we can navigate to the order page directly after creating the order in the action function. But if we wanted to stay on the same page and display a message or something, we could use useActionData to get the returned data from the action function.
   // const navigate = useNavigate();
@@ -58,6 +62,9 @@ function CreateOrder() {
           <label>Phone number</label>
           <div>
             <input type="tel" name="phone" required />
+            {formErrors?.phone && (
+              <p style={{ color: "red" }}>{formErrors.phone}</p>
+            )}
           </div>
         </div>
 
@@ -81,7 +88,9 @@ function CreateOrder() {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <button>Order now</button>
+          <button disabled={isSubmitting}>
+            {isSubmitting ? "Placing order..." : "Order now"}
+          </button>
         </div>
       </Form>
     </div>
@@ -98,6 +107,16 @@ export async function action({ request }) {
     cart: JSON.parse(data.cart), // We need to parse the cart data, because it was stringified before being sent to the server.
   };
 
+  const errors = {};
+  if (!isValidPhone(order.phone)) {
+    errors.phone = "Please enter a valid phone number";
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return errors;
+  }
+
+  // if there are no errors, we create the order
   const newOrder = await createOrder(order);
 
   return redirect(`/order/${newOrder.id}`); // After creating the order, we redirect to the order page. The new order's id is available in the returned data from the createOrder function, which is returned from the action function, and can be accessed in the component via useActionData. But since we're redirecting to a different page, we don't need to use useActionData here, we can just use the new order's id directly in the redirect function.
