@@ -5,7 +5,7 @@
 /* NOTE - This way to how to combine tailwind classes */
 @layer components {
   .input {
-    @apply w-full rounded-full border border-stone-200 px-4 py-2 text-sm transition-all duration-300 placeholder:text-stone-400 focus:border-yellow-300 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 md:px-6 md:py-3;
+    @apply rounded-full border border-stone-200 px-4 py-2 text-sm transition-all duration-300 placeholder:text-stone-400 focus:border-yellow-300 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 md:px-6 md:py-3;
   }
 
   /* https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */

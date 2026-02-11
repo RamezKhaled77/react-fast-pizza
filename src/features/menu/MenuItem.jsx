@@ -1,17 +1,42 @@
 /* eslint-disable react/prop-types */
+import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
 
 function MenuItem({ pizza }) {
-  const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const {
+    id,
+    name,
+    unitPrice,
+    ingredients,
+    soldOut,
+    imageUrl,
+  } = pizza;
 
   return (
-    <li>
-      <img src={imageUrl} alt={name} />
-      <div>
-        <p>{name}</p>
-        <p>{ingredients.join(", ")}</p>
-        <div>
-          {!soldOut ? <p>{formatCurrency(unitPrice)}</p> : <p>Sold out</p>}
+    <li className="flex w-full gap-6 px-2 py-4 sm:px-0">
+      <img
+        src={imageUrl}
+        alt={name}
+        className={`h-24 ${soldOut ? "opacity-70 grayscale" : ""}`}
+      />
+      <div className="flex w-full flex-col pt-0.5">
+        <p className="font-medium">{name}</p>
+        <p className="text-sm capitalize italic text-stone-500">
+          {ingredients.join(", ")}
+        </p>
+        <div
+          className={`mt-4 flex items-center justify-between font-medium`}
+        >
+          {!soldOut ? (
+            <p>{formatCurrency(unitPrice)}</p>
+          ) : (
+            <p className="text-sm uppercase text-stone-500">
+              Sold out
+            </p>
+          )}
+          <Button type="small">
+            Add to cart
+          </Button>
         </div>
       </div>
     </li>

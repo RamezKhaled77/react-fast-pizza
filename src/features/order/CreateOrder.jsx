@@ -55,51 +55,76 @@ function CreateOrder() {
 
   const cart = fakeCart;
 
+  const styles = {
+    box: `mb-6 flex flex-col gap-2 sm:flex-row sm:items-center`,
+    label: `sm:basis-40`,
+  };
+
   return (
-    <div>
-      <h2>Ready to order? Let&apos;s go!</h2>
+    <div className="my-8 px-4 py-6">
+      <h2 className="mb-8 text-xl font-semibold">
+        Ready to order? Let&apos;s go!
+      </h2>
 
       <Form method="POST">
-        <div>
-          <label>First Name</label>
+        <div className={styles.box}>
+          <label
+            className={styles.label}
+            htmlFor="customer"
+          >
+            First Name
+          </label>
           <input
-            className="input"
+            className="input grow"
             type="text"
             name="customer"
+            id="customer"
             required
           />
         </div>
 
-        <div>
-          <label>Phone number</label>
-          <div>
+        <div className={styles.box}>
+          <label
+            className={styles.label}
+            htmlFor="phone"
+          >
+            Phone number
+          </label>
+          <div className="grow">
             <input
-              className="input"
+              className="input w-full"
               type="tel"
               name="phone"
+              id="phone"
               required
             />
             {formErrors?.phone && (
-              <p style={{ color: "red" }}>
+              <p className="mt-2 rounded-lg bg-red-100 px-3 py-1 text-xs text-red-700">
                 {formErrors.phone}
               </p>
             )}
           </div>
         </div>
 
-        <div>
-          <label>Address</label>
-          <div>
+        <div className={styles.box}>
+          <label
+            className={styles.label}
+            htmlFor="address"
+          >
+            Address
+          </label>
+          <div className="grow">
             <input
-              className="input"
+              className="input w-full"
               type="text"
               name="address"
+              id="address"
               required
             />
           </div>
         </div>
 
-        <div>
+        <div className="mb-12 flex items-center gap-6">
           <input
             className="h-6 w-6 accent-yellow-400 focus:border-yellow-300 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2"
             type="checkbox"
@@ -108,7 +133,10 @@ function CreateOrder() {
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
           />
-          <label htmlFor="priority">
+          <label
+            htmlFor="priority"
+            className="font-medium"
+          >
             Want to yo give your order priority?
           </label>
         </div>
@@ -119,7 +147,10 @@ function CreateOrder() {
             name="cart"
             value={JSON.stringify(cart)}
           />
-          <Button disabled={isSubmitting}>
+          <Button
+            type="primary"
+            disabled={isSubmitting}
+          >
             {isSubmitting
               ? "Placing order..."
               : "Order now"}
@@ -143,7 +174,7 @@ export async function action({ request }) {
   const errors = {};
   if (!isValidPhone(order.phone)) {
     errors.phone =
-      "Please enter a valid phone number";
+      "Please give us your phone number, so we can contact you about your order.";
   }
 
   if (Object.keys(errors).length > 0) {
