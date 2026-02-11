@@ -62,6 +62,7 @@ function CreateOrder() {
         <div>
           <label>First Name</label>
           <input
+            className="input"
             type="text"
             name="customer"
             required
@@ -72,6 +73,7 @@ function CreateOrder() {
           <label>Phone number</label>
           <div>
             <input
+              className="input"
               type="tel"
               name="phone"
               required
@@ -88,6 +90,7 @@ function CreateOrder() {
           <label>Address</label>
           <div>
             <input
+              className="input"
               type="text"
               name="address"
               required
@@ -97,6 +100,7 @@ function CreateOrder() {
 
         <div>
           <input
+            className="h-6 w-6 accent-yellow-400 focus:border-yellow-300 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2"
             type="checkbox"
             name="priority"
             id="priority"
@@ -116,7 +120,9 @@ function CreateOrder() {
           />
           <button
             disabled={isSubmitting}
-            className={`inline-block rounded-full bg-yellow-400 px-4 py-3 text-sm font-semibold uppercase tracking-wide text-stone-800 transition-all duration-300 hover:bg-yellow-300 focus:bg-yellow-300 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed`}
+            className="inline-block rounded-full bg-yellow-400 px-4 py-3 text-sm font-semibold uppercase tracking-wide
+            text-stone-800 transition-all duration-300 hover:bg-yellow-300 focus:bg-yellow-300 focus:outline-none focus:ring
+            focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed"
           >
             {isSubmitting
               ? "Placing order..."
