@@ -30,7 +30,12 @@ function Cart() {
 
   return (
     <div>
-      <Link to="/menu">&larr; Back to menu</Link>
+      <Link
+        to="/menu"
+        className="text-sm text-indigo-500 hover:text-indigo-700 hover:underline"
+      >
+        &larr; Back to menu
+      </Link>
 
       <h2>Your cart, %NAME%</h2>
 
