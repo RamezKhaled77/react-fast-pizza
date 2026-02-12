@@ -1,12 +1,8 @@
 import { useState } from "react";
-import {
-  Form,
-  redirect,
-  useActionData,
-  useNavigation,
-} from "react-router-dom";
+import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../ui/Button";
+import { useSelector } from "react-redux";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -41,8 +37,9 @@ const fakeCart = [
 function CreateOrder() {
   const formErrors = useActionData();
   const navigation = useNavigation();
-  const isSubmitting =
-    navigation.state === "submitting";
+  const userName = useSelector((state) => state.user.username);
+
+  const isSubmitting = navigation.state === "submitting";
 
   // const [withPriority, setWithPriority] = useState(false);
   // NOTE - We don't need to use useActionData here, because we can navigate to the order page directly after creating the order in the action function. But if we wanted to stay on the same page and display a message or something, we could use useActionData to get the returned data from the action function.
@@ -68,15 +65,13 @@ function CreateOrder() {
 
       <Form method="POST">
         <div className={styles.box}>
-          <label
-            className={styles.label}
-            htmlFor="customer"
-          >
+          <label className={styles.label} htmlFor="customer">
             First Name
           </label>
           <input
             className="input grow"
             type="text"
+            defaultValue={userName ? userName : ""}
             name="customer"
             id="customer"
             required
@@ -84,10 +79,7 @@ function CreateOrder() {
         </div>
 
         <div className={styles.box}>
-          <label
-            className={styles.label}
-            htmlFor="phone"
-          >
+          <label className={styles.label} htmlFor="phone">
             Phone number
           </label>
           <div className="grow">
@@ -107,10 +99,7 @@ function CreateOrder() {
         </div>
 
         <div className={styles.box}>
-          <label
-            className={styles.label}
-            htmlFor="address"
-          >
+          <label className={styles.label} htmlFor="address">
             Address
           </label>
           <div className="grow">
@@ -133,27 +122,15 @@ function CreateOrder() {
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
           />
-          <label
-            htmlFor="priority"
-            className="font-medium"
-          >
+          <label htmlFor="priority" className="font-medium">
             Want to yo give your order priority?
           </label>
         </div>
 
         <div>
-          <input
-            type="hidden"
-            name="cart"
-            value={JSON.stringify(cart)}
-          />
-          <Button
-            type="primary"
-            disabled={isSubmitting}
-          >
-            {isSubmitting
-              ? "Placing order..."
-              : "Order now"}
+          <input type="hidden" name="cart" value={JSON.stringify(cart)} />
+          <Button type="primary" disabled={isSubmitting}>
+            {isSubmitting ? "Placing order..." : "Order now"}
           </Button>
         </div>
       </Form>
