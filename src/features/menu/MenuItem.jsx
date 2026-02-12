@@ -3,11 +3,28 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
 import { addItem, getIsItemInCart } from "../cart/cartSlice";
+import { toast } from "sonner";
 
 function MenuItem({ pizza }) {
   const dispatch = useDispatch();
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
   const isInCart = useSelector(getIsItemInCart(id));
+
+  function handleAddToCart() {
+    const newItem = {
+      pizzaId: id,
+      name,
+      quantity: 1,
+      unitPrice,
+      totalPrice: unitPrice * 1,
+    };
+    dispatch(addItem(newItem));
+    if (isInCart) {
+      toast("➕ Incremented item quantity!");
+    } else {
+      toast("✔ Item added to cart successfully!");
+    }
+  }
 
   return (
     <li className="flex w-full gap-6 px-2 py-4 sm:px-0">
@@ -27,23 +44,11 @@ function MenuItem({ pizza }) {
           ) : (
             <p className="text-sm uppercase text-stone-500">Sold out</p>
           )}
-          <Button
-            disabled={soldOut}
-            type="small"
-            onClick={() =>
-              dispatch(
-                addItem({
-                  pizzaId: id,
-                  name,
-                  unitPrice,
-                  quantity: 1,
-                  totalPrice: unitPrice,
-                }),
-              )
-            }
-          >
-            {isInCart ? "Add more +" : "Add to cart"}
-          </Button>
+          {!soldOut && (
+            <Button type="small" onClick={handleAddToCart}>
+              {isInCart ? "Add more +" : "Add to cart"}
+            </Button>
+          )}
         </div>
       </div>
     </li>
