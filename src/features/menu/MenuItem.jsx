@@ -28,6 +28,7 @@ function MenuItem({ pizza }) {
             <p className="text-sm uppercase text-stone-500">Sold out</p>
           )}
           <Button
+            disabled={soldOut}
             type="small"
             onClick={() =>
               dispatch(

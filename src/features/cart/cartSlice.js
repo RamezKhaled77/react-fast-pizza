@@ -50,11 +50,44 @@ const cartSlice = createSlice({
         (item) => item.pizzaId !== action.payload,
       );
     },
+    clearCart(state) {
+      state.cartItems = [];
+    },
+    incrementItemQuantity(state, action) {
+      state.cartItems = state.cartItems.map((item) => {
+        if (item.pizzaId === action.payload) {
+          return {
+            ...item,
+            quantity: item.quantity + 1,
+            totalPrice: item.unitPrice * (item.quantity + 1),
+          };
+        }
+        return item;
+      });
+    },
+    decrementItemQuantity(state, action) {
+      state.cartItems = state.cartItems.map((item) => {
+        if (item.pizzaId === action.payload) {
+          return {
+            ...item,
+            quantity: item.quantity - 1,
+            totalPrice: item.unitPrice * (item.quantity - 1),
+          };
+        }
+        return item;
+      });
+    },
   },
 });
 
 export const getIsItemInCart = (id) => (state) =>
   state.cart.cartItems.some((item) => item.pizzaId === id);
 
-export const { addItem, removeItem } = cartSlice.actions;
+export const {
+  addItem,
+  removeItem,
+  clearCart,
+  incrementItemQuantity,
+  decrementItemQuantity,
+} = cartSlice.actions;
 export default cartSlice.reducer;

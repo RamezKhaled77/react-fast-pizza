@@ -2,8 +2,7 @@
 import { Link } from "react-router-dom";
 
 function Button({ onClick, children, disabled, to, type = "primary" }) {
-  const base =
-    "inline-block rounded-full bg-yellow-400  text-sm font-semibold uppercase tracking-wide text-stone-800 transition-all duration-300 hover:bg-yellow-300 focus:bg-yellow-300 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed  w-fit";
+  const base = `inline-block rounded-full   text-sm font-semibold uppercase tracking-wide text-stone-800 transition-all duration-300  focus:outline-none focus:ring  focus:ring-offset-2 disabled:cursor-not-allowed  w-fit ${disabled ? "opacity-60 bg-stone-300" : "bg-yellow-400 hover:bg-yellow-300 focus:bg-yellow-300 focus:ring-yellow-300"}`;
 
   const styles = {
     primary: base + " px-4 py-3 md:px-6 md:py-3",

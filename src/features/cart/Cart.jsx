@@ -1,8 +1,10 @@
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Button from "../../ui/Button";
 import LinkButton from "../../ui/LinkButton";
 import CartItem from "./CartItem";
 import EmptyCart from "./EmptyCart";
+import { clearCart } from "./cartSlice";
 
 const fakeCart = [
   {
@@ -31,6 +33,7 @@ const fakeCart = [
 function Cart() {
   const userName = useSelector((state) => state.user.username);
   const cart = useSelector((state) => state.cart.cartItems);
+  const dispatch = useDispatch();
   // const cart1 = fakeCart;
   console.log(cart);
 
@@ -52,7 +55,9 @@ function Cart() {
 
       <div className="mt-6 space-x-4">
         <Button to="/order/new">Order pizzas</Button>
-        <Button type="secondary">Clear cart</Button>
+        <Button type="secondary" onClick={() => dispatch(clearCart())}>
+          Clear cart
+        </Button>
       </div>
     </div>
   );
