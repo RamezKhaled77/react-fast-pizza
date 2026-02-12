@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
-import { addItem, getIsItemInCart } from "../cart/cartSlice";
+import { addItem, getIsItemInCart, removeItem } from "../cart/cartSlice";
 import { toast } from "sonner";
 
 function MenuItem({ pizza }) {
@@ -26,6 +26,11 @@ function MenuItem({ pizza }) {
     }
   }
 
+  function handleRemoveFromCart() {
+    dispatch(removeItem(id));
+    toast("❌ Item removed from cart successfully!");
+  }
+
   return (
     <li className="flex w-full gap-6 px-2 py-4 sm:px-0">
       <img
@@ -45,9 +50,19 @@ function MenuItem({ pizza }) {
             <p className="text-sm uppercase text-stone-500">Sold out</p>
           )}
           {!soldOut && (
-            <Button type="small" onClick={handleAddToCart}>
-              {isInCart ? "Add more +" : "Add to cart"}
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button
+                type={isInCart ? "secondarySmall" : "small"}
+                onClick={handleAddToCart}
+              >
+                {isInCart ? "Add more +" : "Add to cart"}
+              </Button>
+              {isInCart && (
+                <Button type="removeSmall" onClick={handleRemoveFromCart}>
+                  Remove
+                </Button>
+              )}
+            </div>
           )}
         </div>
       </div>

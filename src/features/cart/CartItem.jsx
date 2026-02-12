@@ -17,8 +17,11 @@ function CartItem({ item }) {
       <div className="flex items-center justify-between sm:gap-6">
         <p className="text-sm font-semibold">{formatCurrency(totalPrice)}</p>
 
-        <Button type="small" onClick={() => dispatch(removeItem(pizzaId))}>
-          Delete
+        <Button
+          type="removeSmall"
+          onClick={() => dispatch(removeItem(pizzaId))}
+        >
+          Remove
         </Button>
       </div>
     </li>
