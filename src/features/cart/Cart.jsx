@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import Button from "../../ui/Button";
 import LinkButton from "../../ui/LinkButton";
 import CartItem from "./CartItem";
+import EmptyCart from "./EmptyCart";
 
 const fakeCart = [
   {
@@ -29,8 +30,11 @@ const fakeCart = [
 
 function Cart() {
   const userName = useSelector((state) => state.user.username);
-  const cart = fakeCart;
+  const cart = useSelector((state) => state.cart.cartItems);
+  // const cart1 = fakeCart;
   console.log(cart);
+
+  if (!cart.length) return <EmptyCart />;
 
   return (
     <div className="px-4 py-3">
