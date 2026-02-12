@@ -27,25 +27,20 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem(state, action) {
-      if (
-        state.cartItems.some((item) => item.pizzaId === action.payload.pizzaId)
-      ) {
-        state.cartItems = state.cartItems.map((item) => {
-          if (item.pizzaId === action.payload.pizzaId) {
-            return {
-              ...item,
-              quantity: item.quantity + action.payload.quantity,
-              totalPrice:
-                item.unitPrice * (item.quantity + action.payload.quantity),
-            };
-          }
-          return item;
-        });
+      // NOTE - Payload need to be a newItem object
+      const existingItem = state.cartItems.find(
+        (item) => item.pizzaId === action.payload.pizzaId,
+      );
+      if (existingItem) {
+        existingItem.quantity++;
+        existingItem.totalPrice =
+          existingItem.unitPrice * existingItem.quantity;
       } else {
-        state.cartItems = [...state.cartItems, action.payload];
+        state.cartItems.push(action.payload);
       }
     },
     removeItem(state, action) {
+      // NOTE - Payload need to be a pizzaId
       state.cartItems = state.cartItems.filter(
         (item) => item.pizzaId !== action.payload,
       );
@@ -54,28 +49,20 @@ const cartSlice = createSlice({
       state.cartItems = [];
     },
     incrementItemQuantity(state, action) {
-      state.cartItems = state.cartItems.map((item) => {
-        if (item.pizzaId === action.payload) {
-          return {
-            ...item,
-            quantity: item.quantity + 1,
-            totalPrice: item.unitPrice * (item.quantity + 1),
-          };
-        }
-        return item;
-      });
+      // NOTE - Payload need to be a pizzaId
+      const item = state.cartItems.find(
+        (item) => item.pizzaId === action.payload,
+      );
+      item.quantity++;
+      item.totalPrice = item.unitPrice * item.quantity;
     },
     decrementItemQuantity(state, action) {
-      state.cartItems = state.cartItems.map((item) => {
-        if (item.pizzaId === action.payload) {
-          return {
-            ...item,
-            quantity: item.quantity - 1,
-            totalPrice: item.unitPrice * (item.quantity - 1),
-          };
-        }
-        return item;
-      });
+      // NOTE - Payload need to be a pizzaId
+      const item = state.cartItems.find(
+        (item) => item.pizzaId === action.payload,
+      );
+      item.quantity--;
+      item.totalPrice = item.unitPrice * item.quantity;
     },
   },
 });
