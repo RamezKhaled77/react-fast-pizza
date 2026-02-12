@@ -11,17 +11,17 @@ function AppLayout() {
   return (
     <div className="grid h-screen grid-rows-[auto_1fr_auto]">
       <Header />
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          style: {
-            background: "#eee",
-          },
-        }}
-      />
 
       <div id="layout" className="overflow-y-scroll">
         <main className="mx-auto max-w-3xl">
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              style: {
+                background: "#eee",
+              },
+            }}
+          />
           {isLoading ? <Loader /> : <Outlet />}
         </main>
       </div>
