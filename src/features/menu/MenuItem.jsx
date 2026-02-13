@@ -4,6 +4,7 @@ import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
 import { addItem, getIsItemInCart, removeItem } from "../cart/cartSlice";
 import { toast } from "sonner";
+import UpdateItemQuantity from "../cart/UpdateItemQuantity";
 
 function MenuItem({ pizza }) {
   const dispatch = useDispatch();
@@ -51,17 +52,27 @@ function MenuItem({ pizza }) {
           )}
           {!soldOut && (
             <div className="flex items-center gap-3">
-              <Button
+              {/* NOTE - Option 1 */}
+              {isInCart ? (
+                <div className="flex items-center gap-3">
+                  <UpdateItemQuantity pizzaId={id} quantity={1} />
+                  <Button type="removeSmall" onClick={handleRemoveFromCart}>
+                    Remove
+                  </Button>
+                </div>
+              ) : (
+                <Button type={"small"} onClick={handleAddToCart}>
+                  Add to cart
+                </Button>
+              )}
+
+              {/* NOTE - Option 2 */}
+              {/* <Button
                 type={isInCart ? "secondarySmall" : "small"}
                 onClick={handleAddToCart}
               >
                 {isInCart ? "Add more +" : "Add to cart"}
-              </Button>
-              {isInCart && (
-                <Button type="removeSmall" onClick={handleRemoveFromCart}>
-                  Remove
-                </Button>
-              )}
+              </Button> */}
             </div>
           )}
         </div>

@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
 import { removeItem } from "./cartSlice";
+import UpdateItemQuantity from "./UpdateItemQuantity";
 
 // eslint-disable-next-line react/prop-types
 function CartItem({ item }) {
@@ -17,10 +18,8 @@ function CartItem({ item }) {
       <div className="flex items-center justify-between sm:gap-6">
         <p className="text-sm font-semibold">{formatCurrency(totalPrice)}</p>
 
-        <Button
-          type="removeSmall"
-          onClick={() => dispatch(removeItem(pizzaId))}
-        >
+        <UpdateItemQuantity pizzaId={pizzaId} quantity={quantity} />
+        <Button type="removeSmall" onClick={() => dispatch(removeItem(pizzaId))}>
           Remove
         </Button>
       </div>
