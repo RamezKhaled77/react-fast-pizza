@@ -82,10 +82,6 @@ This is a simple React application that provides a pizza delivery service. It al
 4. Place an order and view the order details
 5. Sign up or log in to your account to save your profile and order history
 
-## Contributing
 
-Contributions are welcome! If you find a bug or want to add a new feature, please open an issue or submit a pull request.
 
-## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
