@@ -3,16 +3,13 @@ import LinkButton from "./LinkButton";
 
 function Error() {
   const error = useRouteError(); // For accessing the error information
-  console.error(error);
 
   return (
     <div>
       <h1>Something went wrong 😢</h1>
       <p>{error.data || error.message}</p>
 
-      <LinkButton to={`-1`}>
-        &larr; Go back
-      </LinkButton>
+      <LinkButton to={`-1`}>&larr; Go back</LinkButton>
       {/* <button onClick={() => navigate(-1)}>
         &larr; Go back
       </button> */}

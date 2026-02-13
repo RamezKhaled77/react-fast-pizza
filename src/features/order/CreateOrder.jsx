@@ -31,14 +31,6 @@ function CreateOrder() {
 
   const isSubmitting = navigation.state === "submitting";
 
-  // NOTE - We don't need to use useActionData here, because we can navigate to the order page directly after creating the order in the action function. But if we wanted to stay on the same page and display a message or something, we could use useActionData to get the returned data from the action function.
-  // const navigate = useNavigate();
-  // const newOrder = useActionData();
-  // if (newOrder) {
-  //   console.log(newOrder.id);
-  //   navigate(`/order/${newOrder.id}`);
-  // }
-
   const dispatch = useDispatch();
   const cart = useSelector(getCart);
   const totalCartPrice = useSelector(getTotalCartPrice);
