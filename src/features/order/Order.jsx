@@ -7,6 +7,7 @@ import {
   formatCurrency,
   formatDate,
 } from "../../utils/helpers";
+import UpdateOrder from "./UpdateOrder";
 
 function Order() {
   const order = useLoaderData();
@@ -21,16 +22,12 @@ function Order() {
     estimatedDelivery,
     cart,
   } = order;
-  const deliveryIn = calcMinutesLeft(
-    estimatedDelivery,
-  );
+  const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
     <div className="space-y-6 px-4 py-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h2 className="text-xl font-semibold">
-          Order #{id} - status
-        </h2>
+        <h2 className="text-xl font-semibold">Order #{id} - status</h2>
 
         <div className="space-x-2">
           {priority && (
@@ -51,8 +48,7 @@ function Order() {
             : "Order should have arrived"}
         </p>
         <p className="text-sm text-stone-500">
-          (Estimated delivery:{" "}
-          {formatDate(estimatedDelivery)})
+          (Estimated delivery: {formatDate(estimatedDelivery)})
         </p>
       </div>
 
@@ -64,22 +60,18 @@ function Order() {
 
       <div className="space-y-3 bg-stone-200 px-6 py-4">
         <p className="text-sm font-medium text-stone-600">
-          Price pizza:{" "}
-          {formatCurrency(orderPrice)}
+          Price pizza: {formatCurrency(orderPrice)}
         </p>
         {priority && (
           <p className="text-sm font-medium text-stone-600">
-            Price priority:{" "}
-            {formatCurrency(priorityPrice)}
+            Price priority: {formatCurrency(priorityPrice)}
           </p>
         )}
         <p className="text-sm font-bold text-stone-600">
-          To pay on delivery:{" "}
-          {formatCurrency(
-            orderPrice + priorityPrice,
-          )}
+          To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+      {!priority && <UpdateOrder order={order} />}
     </div>
   );
 }

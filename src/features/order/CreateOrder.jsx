@@ -19,7 +19,7 @@ function CreateOrder() {
   const formErrors = useActionData();
   const navigation = useNavigation();
   const {
-    userName,
+    username,
     status: addressStatus,
     position,
     address,
@@ -54,7 +54,9 @@ function CreateOrder() {
 
   return (
     <div className="my-8 px-4 py-6">
-      <h2 className="mb-8 text-xl font-semibold">Ready to order? Let&apos;s go!</h2>
+      <h2 className="mb-8 text-xl font-semibold">
+        Ready to order? Let&apos;s go!
+      </h2>
 
       <Form method="POST">
         <div className={styles.box}>
@@ -64,7 +66,7 @@ function CreateOrder() {
           <input
             className="input grow"
             type="text"
-            defaultValue={userName ? userName : ""}
+            defaultValue={username ? username : ""}
             name="customer"
             id="customer"
             required
@@ -114,7 +116,7 @@ function CreateOrder() {
 
           {!position.latitude && !position.longitude && (
             <span
-              className={`absolute right-[3px] top-[3px] z-50 md:right-[5px] md:top-[5px] ${hasAddressError && "right-[3px] top-[35px] sm:top-[3px] md:right-[5px] md:top-[5px]"}`}
+              className={`absolute right-[3px] top-[35px] z-50 sm:top-[3px] md:right-[5px] md:top-[5px] ${hasAddressError && "right-[3px] top-[35px] sm:top-[3px] md:right-[5px] md:top-[5px]"}`}
             >
               <Button
                 disabled={isAddressLoading}
